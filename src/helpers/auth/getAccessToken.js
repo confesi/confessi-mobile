@@ -24,10 +24,6 @@ export default async function getAccessToken() {
     } catch (error) {
         return {error: true, reason: "unknown"};
     }
-    
-
-    // if (response.status != 200) return "Incorrect/expired refresh token";
-    return "test";
 }
 
 
