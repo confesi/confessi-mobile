@@ -6,6 +6,8 @@ import { store } from './src/redux/store';
 
 export default function App() {
   return (
-    <Root/>
+    <Provider store={store}>
+      <Root/>
+    </Provider>
   );
 }
