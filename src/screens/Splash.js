@@ -1,5 +1,8 @@
+// This screen is shown while loading fonts... so it shouldn't contain anything with text - preferably eventually an animated logo
+
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
+import { PINK, WHITE } from "../constants/colors";
 
 export default function Splash() {
     return (
@@ -16,19 +19,19 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
       alignContent: "space-between",
-      backgroundColor: "#448EF6",
+      backgroundColor: PINK,
     },
     text: {
         flex: 1,
         fontWeight: "bold",
-        color: "white",
+        color: WHITE,
         fontSize: 30,
         textAlign: "center",
-        top: "25%"
+        top: "25%",
     },
     smallText: {
         fontWeight: "300",
-        color: "white",
+        color: WHITE,
         fontSize: 15,
         textAlign: "center",
     }

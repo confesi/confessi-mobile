@@ -1,9 +1,9 @@
+// THOUGHTS
 // if it times out, just say no internet or something, don't redirect? Or just test timeouts in general
 // timeout controller leads to no wifi message? idk, cuz that could also be beacuse toknen can't be found (or not cuz I have !token check on getAccessToken)
 // Eitherway, this could help: https://stackoverflow.com/questions/46946380/fetch-api-request-timeout
 
 import React, { useState, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import Splash from "../screens/Splash";
 import TabsNavigation from "./Tabs";
 import Open from "../screens/auth/Open";
@@ -14,6 +14,49 @@ import { selectAccessToken, setAccessToken } from "../redux/slices/tokenSlice";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "../screens/auth/Login";
 import { ACCESS_TOKEN_LIFETIME } from "../constants/setup";
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import {
+    useFonts,
+    Poppins_100Thin,
+    Poppins_100Thin_Italic,
+    Poppins_200ExtraLight,
+    Poppins_200ExtraLight_Italic,
+    Poppins_300Light,
+    Poppins_300Light_Italic,
+    Poppins_400Regular,
+    Poppins_400Regular_Italic,
+    Poppins_500Medium,
+    Poppins_500Medium_Italic,
+    Poppins_600SemiBold,
+    Poppins_600SemiBold_Italic,
+    Poppins_700Bold,
+    Poppins_700Bold_Italic,
+    Poppins_800ExtraBold,
+    Poppins_800ExtraBold_Italic,
+    Poppins_900Black,
+    Poppins_900Black_Italic 
+  } from '@expo-google-fonts/poppins'
+  import { 
+    Montserrat_100Thin,
+    Montserrat_100Thin_Italic,
+    Montserrat_200ExtraLight,
+    Montserrat_200ExtraLight_Italic,
+    Montserrat_300Light,
+    Montserrat_300Light_Italic,
+    Montserrat_400Regular,
+    Montserrat_400Regular_Italic,
+    Montserrat_500Medium,
+    Montserrat_500Medium_Italic,
+    Montserrat_600SemiBold,
+    Montserrat_600SemiBold_Italic,
+    Montserrat_700Bold,
+    Montserrat_700Bold_Italic,
+    Montserrat_800ExtraBold,
+    Montserrat_800ExtraBold_Italic,
+    Montserrat_900Black,
+    Montserrat_900Black_Italic 
+  } from '@expo-google-fonts/montserrat'
+import { OFF_WHITE, WHITE } from "../constants/colors";
 
 
 export default function Root() {
@@ -21,16 +64,21 @@ export default function Root() {
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
+  const [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Poppins_400Regular,
+    Montserrat_500Medium,
+    Poppins_600SemiBold,
+    Montserrat_700Bold,
+  });
 
   // using the stored (or not stored if first time/token invalid) refresh token, fetch an accessToken from the server and send it to redux store
   useEffect(() => {
     async function getToken() {
         let tokenData = await getAccessToken();
-        console.log(tokenData.error)
         if (tokenData.error == false) {
             dispatch(setAccessToken(tokenData.accessToken));
         } else {
-            console.log("HERE IS THE PROBLEM");
             dispatch(setAccessToken(null));
         }
         // delays setting loading to false for x milliseconds as to not cause a super fast "jank" screen transition
@@ -39,7 +87,6 @@ export default function Root() {
         }, 400);
         // refreshes the access token using the refresh token directly before the old access token would expire
         setTimeout(() => {
-            console.log("<=== access token refreshed ===>");
             getToken();
         }, ACCESS_TOKEN_LIFETIME - 500);
     }
@@ -48,12 +95,21 @@ export default function Root() {
 
   const RootStack = createNativeStackNavigator();
 
+// The theme React Navigation uses to add color to our components if we don't - setting default background color here to my constant (there's is a white-gray)
+const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: WHITE,
+    },
+};
+
 // if loading, display splash screen, else, if there exists an access token show home screen, else, show open screen
 return (
-    <NavigationContainer>
-        <StatusBar barStyle="dark-content"/>
+    <NavigationContainer theme={MyTheme}>
+        <StatusBar barStyle="light-content"/>
         <RootStack.Navigator>
-            {loading ? <RootStack.Screen
+            {loading || !fontsLoaded ? <RootStack.Screen
                     name="Splash"
                     component={Splash}
                     options={{

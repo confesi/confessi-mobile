@@ -7,13 +7,14 @@ import ProfileStackScreen from "./stacks/Profile";
 import ArchiveStackScreen from "./stacks/Archive";
 import PostStackScreen from "./stacks/Post";
 import SearchStackScreen from "./stacks/Search";
+import { GRAY, GREEN } from "../constants/colors";
 
 export default function TabsNavigation() {
 
     const Tab = createBottomTabNavigator();
 
     return (
-        <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle: {backgroundColor: "white", borderTopColor: "#73777B", borderTopWidth: 0.25}}}>
+        <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle: {backgroundColor: "white", borderTopColor: GRAY, borderTopWidth: 0.5}}}>
                 <Tab.Screen name="HomeTab" component={HomeStackScreen} options={({ navigation }) => ({
                       tabBarButton: (props) => {
                           return (

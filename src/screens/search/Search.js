@@ -1,19 +1,29 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, StatusBar, Platform } from "react-native";
 import React from "react";
+import Appbar from "../../components/layout/Appbar";
+import FilterTile from "../../components/buttons/FilterTile";
+import { GREEN, LIGHT_GREEN, OFF_WHITE, WHITE } from "../../constants/colors";
 
 export default function Search() {
     return (
-        <View style={styles.container}>
-            <Text>Search Screen</Text>
-        </View>
+        <SafeAreaView style={styles.canvas}>
+            <Appbar/>
+            <View style={styles.body}>
+                <FilterTile text="Trending" backgroundColor={GREEN} textColor={WHITE}/>
+                <FilterTile text="Controversial" backgroundColor={LIGHT_GREEN} textColor={GREEN}/>
+                <FilterTile text="New" backgroundColor={LIGHT_GREEN} textColor={GREEN}/>
+                <FilterTile text="Hottest" backgroundColor={LIGHT_GREEN} textColor={GREEN}/>
+            </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+    canvas: {
+        backgroundColor: GREEN,
+    },  
+    body: {
+      backgroundColor: WHITE,
+      flexDirection: "row",
     },
 });
