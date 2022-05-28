@@ -11,9 +11,9 @@ import { StatusBar } from "react-native";
 import getAccessToken from "../helpers/auth/getAccessToken";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAccessToken, setAccessToken } from "../redux/slices/tokenSlice";
-import * as SecureStore from 'expo-secure-store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "../screens/auth/Login";
+import { ACCESS_TOKEN_LIFETIME } from "../constants/setup";
 
 
 export default function Root() {
@@ -25,14 +25,23 @@ export default function Root() {
   // using the stored (or not stored if first time/token invalid) refresh token, fetch an accessToken from the server and send it to redux store
   useEffect(() => {
     async function getToken() {
-        // this SecureStore line is added for testing (adding it invalidates our "long-lasting" refresh token)
-        // await SecureStore.setItemAsync("refreshToken", "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTW9uZ29PYmplY3RJRCI6IjYyOGRkMzM5OThhMGZiZjExZGYyNjIwNyIsImlhdCI6MTY1MzY0NzQ4NiwiZXhwIjoxNjg1MjA1MDg2fQ.3a8cpjFojZW2x5muXsVMV_IAv9mpTgckrPHw2lkbFxs");
         let tokenData = await getAccessToken();
-        if (tokenData.error == false) dispatch(setAccessToken(tokenData.accessToken));
+        console.log(tokenData.error)
+        if (tokenData.error == false) {
+            dispatch(setAccessToken(tokenData.accessToken));
+        } else {
+            console.log("HERE IS THE PROBLEM");
+            dispatch(setAccessToken(null));
+        }
         // delays setting loading to false for x milliseconds as to not cause a super fast "jank" screen transition
         setTimeout(() => {
             setLoading(false);
         }, 400);
+        // refreshes the access token using the refresh token directly before the old access token would expire
+        setTimeout(() => {
+            console.log("<=== access token refreshed ===>");
+            getToken();
+        }, ACCESS_TOKEN_LIFETIME - 500);
     }
     getToken();
   }, []);

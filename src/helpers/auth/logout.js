@@ -1,14 +1,17 @@
 import * as SecureStore from 'expo-secure-store';
 import { DOMAIN } from '../../constants/setup';
+import { setAccessToken } from "../../redux/slices/tokenSlice";
 
 
-// Checks if there's a refresh token inside SecureStore, and if so, makes an API call to the server to get an access token
-export default async function getAccessToken() {
+export default async function logout(dispatch) {
+    let refreshToken = await SecureStore.getItemAsync("refreshToken");
+    dispatch(setAccessToken(null));
+    await SecureStore.setItemAsync("refreshToken", "");
+    if (!refreshToken) return {error: true, reason: "no token"};
     try {
-        let refreshToken = await SecureStore.getItemAsync("refreshToken");
         if (!refreshToken) return {error: true, reason: "no token"};
-        let response = await fetch(`${DOMAIN}/api/user/token`, {
-            method: 'POST',
+        let response = await fetch(`${DOMAIN}/api/user/logout`, {
+            method: 'DELETE',
             headers: {
                 'content-type': 'application/json',
             },
@@ -17,16 +20,10 @@ export default async function getAccessToken() {
             }),
         });
         if (response.status == 200) { // true
-            data = await (response.json());
-            return {error: false, accessToken: data.accessToken};
+            return {error: false};
         }
-        
         return {error: true, reason: "invalid token"};
     } catch (error) {
         return {error: true, reason: "unknown"};
     }
 }
-
-
-
-// can I switch "token" to token
