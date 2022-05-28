@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAccessToken, setAccessToken } from "../redux/slices/tokenSlice";
 import * as SecureStore from 'expo-secure-store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from "../screens/auth/Login";
 
 
 export default function Root() {
@@ -24,8 +25,8 @@ export default function Root() {
   // using the stored (or not stored if first time/token invalid) refresh token, fetch an accessToken from the server and send it to redux store
   useEffect(() => {
     async function getToken() {
-        // this SecureStore line is added for testing
-        await SecureStore.setItemAsync("refreshToken", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTW9uZ29PYmplY3RJRCI6IjYyOGRkMzM5OThhMGZiZjExZGYyNjIwNyIsImlhdCI6MTY1MzY0NzQ4NiwiZXhwIjoxNjg1MjA1MDg2fQ.3a8cpjFojZW2x5muXsVMV_IAv9mpTgckrPHw2lkbFxs");
+        // this SecureStore line is added for testing (adding it invalidates our "long-lasting" refresh token)
+        // await SecureStore.setItemAsync("refreshToken", "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTW9uZ29PYmplY3RJRCI6IjYyOGRkMzM5OThhMGZiZjExZGYyNjIwNyIsImlhdCI6MTY1MzY0NzQ4NiwiZXhwIjoxNjg1MjA1MDg2fQ.3a8cpjFojZW2x5muXsVMV_IAv9mpTgckrPHw2lkbFxs");
         let tokenData = await getAccessToken();
         if (tokenData.error == false) dispatch(setAccessToken(tokenData.accessToken));
         // delays setting loading to false for x milliseconds as to not cause a super fast "jank" screen transition
@@ -54,17 +55,28 @@ return (
                 name="Home"
                 component={TabsNavigation}
                 options={{
-                animationTypeForReplace: "push",
+                // animationTypeForReplace: "push",
+                animation: "fade",
                 headerShown: false,
                 }}
             /> : <RootStack.Screen
                 name="Open"
                 component={Open}
                 options={{
-                animationTypeForReplace: "push",
+                // animationTypeForReplace: "pop",
+                animation: "fade",
                 headerShown: false,
                 }}
             />}
+            <RootStack.Screen
+                name="Login"
+                component={Login}
+                options={{
+                animationTypeForReplace: "push",
+                // animation: "fade",
+                headerShown: false,
+                }}
+            />
         </RootStack.Navigator>
     </NavigationContainer>
   );
