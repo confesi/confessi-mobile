@@ -4,7 +4,7 @@ import React from "react";
 export default function Archive() {
     return (
         <View style={styles.container}>
-            <Text style={{ fontFamily: 'Montserrat_400Regular', fontSize: 16 }}>Archive Screen (testing font)</Text>
+            <Text style={styles.text}>Recents Screen (font: inter)</Text>
         </View>
     );
 }
@@ -16,4 +16,8 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center',
     },
+    text: {
+        fontFamily: "Inter_600SemiBold",
+        fontSize: 16,
+    }
 });

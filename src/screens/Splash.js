@@ -1,38 +1,29 @@
 // This screen is shown while loading fonts... so it shouldn't contain anything with text - preferably eventually an animated logo
 
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Image } from "react-native";
 import React from "react";
-import { PINK, WHITE } from "../constants/colors";
+import { PRIMARY, WHITE } from "../constants/colors";
+import TwoTextHorizontal from "../components/text/TwoTextHorizontal";
 
 export default function Splash() {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Confessi</Text>
-            <Text style={styles.smallText}>{`by\nMatthew Trent`}</Text>
+            <Image style={styles.img} source={require("../../assets/logo.png")}></Image>
+            <TwoTextHorizontal/>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 3,
+      flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'space-around',
       alignContent: "space-between",
-      backgroundColor: PINK,
+      backgroundColor: WHITE,
     },
-    text: {
-        flex: 1,
-        fontWeight: "bold",
-        color: WHITE,
-        fontSize: 30,
-        textAlign: "center",
-        top: "25%",
-    },
-    smallText: {
-        fontWeight: "300",
-        color: WHITE,
-        fontSize: 15,
-        textAlign: "center",
+    img: {
+        width: 220,
+        height: 220
     }
 });

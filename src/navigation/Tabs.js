@@ -4,17 +4,17 @@ import { StyleSheet, TouchableOpacity, Text, Button, Pressable } from "react-nat
 import HomeStackScreen from "./stacks/Home";
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfileStackScreen from "./stacks/Profile";
-import ArchiveStackScreen from "./stacks/Archive";
+import ArchiveStackScreen from "./stacks/Recents";
 import PostStackScreen from "./stacks/Post";
 import SearchStackScreen from "./stacks/Search";
-import { GRAY, GREEN } from "../constants/colors";
+import { LIGHT, WHITE } from "../constants/colors";
 
 export default function TabsNavigation() {
 
     const Tab = createBottomTabNavigator();
 
     return (
-        <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle: {backgroundColor: "white", borderTopColor: GRAY, borderTopWidth: 0.5}}}>
+        <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false, tabBarStyle: {backgroundColor: WHITE, borderTopColor: LIGHT, borderTopWidth: 0.5}}}>
                 <Tab.Screen name="HomeTab" component={HomeStackScreen} options={({ navigation }) => ({
                       tabBarButton: (props) => {
                           return (
@@ -24,11 +24,11 @@ export default function TabsNavigation() {
                           );
                       }
                 })}/>
-                <Tab.Screen name="SearchTab" component={SearchStackScreen} options={({ navigation }) => ({
+                <Tab.Screen name="RecentsTab" component={ArchiveStackScreen} options={({ navigation }) => ({
                       tabBarButton: (props) => {
                           return (
-                          <Pressable {...props} onPress={() => navigation.navigate("SearchTab")} style={styles.btn}>
-                            <Icon name={props.accessibilityState.selected ? "search" : "search-outline"} size={30} color="black"/>
+                          <Pressable {...props} onPress={() => navigation.navigate("RecentsTab")} style={styles.btn}>
+                            <Icon name={props.accessibilityState.selected ? "compass" : "compass-outline"} size={30} color="black"/>
                           </Pressable>
                           );
                       }
@@ -42,11 +42,11 @@ export default function TabsNavigation() {
                           );
                       }
                 })}/>
-                <Tab.Screen name="ArchiveTab" component={ArchiveStackScreen} options={({ navigation }) => ({
+                <Tab.Screen name="SearchTab" component={SearchStackScreen} options={({ navigation }) => ({
                       tabBarButton: (props) => {
                           return (
-                          <Pressable {...props} onPress={() => navigation.navigate("ArchiveTab")} style={styles.btn}>
-                            <Icon name={props.accessibilityState.selected ? "compass" : "compass-outline"} size={30} color="black"/>
+                          <Pressable {...props} onPress={() => navigation.navigate("SearchTab")} style={styles.btn}>
+                            <Icon name={props.accessibilityState.selected ? "search" : "search-outline"} size={30} color="black"/>
                           </Pressable>
                           );
                       }

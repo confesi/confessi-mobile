@@ -1,8 +1,7 @@
-const GREEN = "#557C55";
-const LIGHT_GREEN = "#DDE3D9";
+const PRIMARY = "#333333";
+const ACCENT = "#F6C0F6";
 const WHITE = "white";
-const OFF_WHITE = "whitesmoke";
-const PINK = "#DB6B97"
-const GRAY = "#EAEAEA"
+const LIGHT = "#D9D9D9";
+const TEXT = "#595959";
 
-export { GREEN, LIGHT_GREEN, WHITE, OFF_WHITE, PINK, GRAY }
+export { PRIMARY, ACCENT, WHITE, LIGHT, TEXT }

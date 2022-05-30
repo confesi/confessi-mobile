@@ -15,49 +15,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from "../screens/auth/Login";
 import { ACCESS_TOKEN_LIFETIME } from "../constants/setup";
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import {
-    useFonts,
-    Poppins_100Thin,
-    Poppins_100Thin_Italic,
-    Poppins_200ExtraLight,
-    Poppins_200ExtraLight_Italic,
-    Poppins_300Light,
-    Poppins_300Light_Italic,
-    Poppins_400Regular,
-    Poppins_400Regular_Italic,
-    Poppins_500Medium,
-    Poppins_500Medium_Italic,
-    Poppins_600SemiBold,
-    Poppins_600SemiBold_Italic,
-    Poppins_700Bold,
-    Poppins_700Bold_Italic,
-    Poppins_800ExtraBold,
-    Poppins_800ExtraBold_Italic,
-    Poppins_900Black,
-    Poppins_900Black_Italic 
-  } from '@expo-google-fonts/poppins'
-  import { 
-    Montserrat_100Thin,
-    Montserrat_100Thin_Italic,
-    Montserrat_200ExtraLight,
-    Montserrat_200ExtraLight_Italic,
-    Montserrat_300Light,
-    Montserrat_300Light_Italic,
-    Montserrat_400Regular,
-    Montserrat_400Regular_Italic,
-    Montserrat_500Medium,
-    Montserrat_500Medium_Italic,
-    Montserrat_600SemiBold,
-    Montserrat_600SemiBold_Italic,
-    Montserrat_700Bold,
-    Montserrat_700Bold_Italic,
-    Montserrat_800ExtraBold,
-    Montserrat_800ExtraBold_Italic,
-    Montserrat_900Black,
-    Montserrat_900Black_Italic 
-  } from '@expo-google-fonts/montserrat'
-import { OFF_WHITE, WHITE } from "../constants/colors";
-
+import { 
+  useFonts,
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black 
+} from '@expo-google-fonts/inter'
+import { WHITE } from "../constants/colors";
 
 export default function Root() {
   // starts loading, gets accessToken from redux store
@@ -65,11 +35,15 @@ export default function Root() {
   const dispatch = useDispatch();
   const accessToken = useSelector(selectAccessToken);
   const [fontsLoaded] = useFonts({
-    Montserrat_400Regular,
-    Poppins_400Regular,
-    Montserrat_500Medium,
-    Poppins_600SemiBold,
-    Montserrat_700Bold,
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black 
   });
 
   // using the stored (or not stored if first time/token invalid) refresh token, fetch an accessToken from the server and send it to redux store
@@ -107,9 +81,9 @@ const MyTheme = {
 // if loading, display splash screen, else, if there exists an access token show home screen, else, show open screen
 return (
     <NavigationContainer theme={MyTheme}>
-        <StatusBar barStyle="light-content"/>
+        <StatusBar barStyle="dark-content"/>
         <RootStack.Navigator>
-            {loading || !fontsLoaded ? <RootStack.Screen
+            {loading ? <RootStack.Screen
                     name="Splash"
                     component={Splash}
                     options={{
